@@ -8,14 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Maximize Build Space
-      uses: easimon/minimize-linux-build-disk-space@v4
-      with:
-        root-reserve-mb: 2048
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
     - name: Install Build Dependencies
       run: |
@@ -75,4 +69,3 @@ jobs:
       with:
         name: Violet-Kernel-Flashable-ZIP
         path: Violet-UnlockedKernel-A10.zip
-
