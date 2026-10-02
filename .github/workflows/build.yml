@@ -15,20 +15,21 @@ jobs:
         ref: 'violet-q-oss'
         path: 'kernel-source'
 
+    - name: Download Pre-Extracted Clang Toolchain
+      uses: actions/checkout@v4
+      with:
+        repository: 'ZyCromerZ/Clang'
+        ref: '14' # Uses stable Clang 14 compiled specifically for Android kernels
+        path: 'toolchain'
+
     - name: Install Build Dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip wget
 
-    - name: Download AOSP Toolchain and Packaging Tools
+    - name: Download Packaging Tools
       run: |
-        # Download Google's official Android Clang compiler (fixes exit code 9)
-        wget -q "https://googlesource.com" -O clang.tar.gz
-        mkdir toolchain
-        tar -xzf clang.tar.gz -C toolchain/
-        rm clang.tar.gz
-
-        # Download AnyKernel3 framework directly
+        # Download AnyKernel3 framework directly via official HTTP archive link
         curl -L "https://github.com" -o anykernel.zip
         unzip -q anykernel.zip
         mv AnyKernel3-master anykernel
