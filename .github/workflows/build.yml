@@ -14,22 +14,25 @@ jobs:
     - name: Install Build Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip
+        sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip wget
 
-    - name: Download Kernel Source and Tools
+    - name: Download Raw Source Tarballs via HTTP
       run: |
-        # Pulling from LineageOS's clean official mirror to completely bypass Git 128 authentication errors
-        git clone --depth=1 https://github.com kernel-source
+        # Download Kernel Source via direct HTTP tarball link to bypass all Git 128 authentication errors entirely
+        wget https://github.com
+        tar -xzf lineage-17.1.tar.gz
+        mv android_kernel_xiaomi_violet-lineage-17.1 kernel-source
+        rm lineage-17.1.tar.gz
 
         # Download Proton Clang Toolchain using a direct ZIP archive web request
         curl -LO https://github.com
-        unzip master.zip
+        unzip -q master.zip
         mv proton-clang-master toolchain
         rm master.zip
 
         # Download AnyKernel3 framework directly
         curl -LO https://github.com
-        unzip master.zip
+        unzip -q master.zip
         mv AnyKernel3-master anykernel
         rm master.zip
 
