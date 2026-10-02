@@ -16,14 +16,15 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip
 
-    - name: Clone Kernel Source
+    - name: Download Kernel Source and Tools via HTTP
       run: |
-        # Pulls the active crDroid violet kernel source structure directly
-        git clone --depth=1 https://github.com kernel-source
+        # Download Kernel Source via direct HTTP web link to bypass all Git 128 authentication blocks
+        curl -LO https://github.com
+        unzip 11.0.zip
+        mv android_kernel_xiaomi_violet-11.0 kernel-source
+        rm 11.0.zip
 
-    - name: Download Toolchain and Packaging Tools
-      run: |
-        # Download Proton Clang Toolchain using a direct ZIP archive link to bypass Git blockades
+        # Download Proton Clang Toolchain using a direct ZIP archive web request
         curl -LO https://github.com
         unzip master.zip
         mv proton-clang-master toolchain
