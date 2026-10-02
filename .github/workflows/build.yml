@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Uses official GitHub safe-checking tools to pull the verified Xiaomi tree layout natively
     - name: Download Violet Kernel Source Tree
       uses: actions/checkout@v4
       with:
@@ -19,15 +18,15 @@ jobs:
     - name: Install Build Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip
+        sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip wget
 
-    - name: Download Toolchain and Packaging Tools via HTTP
+    - name: Download AOSP Toolchain and Packaging Tools
       run: |
-        # Download Proton Clang Toolchain using a direct ZIP archive web request
-        curl -L "https://github.com" -o toolchain.zip
-        unzip -q toolchain.zip
-        mv proton-clang-master toolchain
-        rm toolchain.zip
+        # Download Google's official Android Clang compiler (fixes exit code 9)
+        wget -q "https://googlesource.com" -O clang.tar.gz
+        mkdir toolchain
+        tar -xzf clang.tar.gz -C toolchain/
+        rm clang.tar.gz
 
         # Download AnyKernel3 framework directly
         curl -L "https://github.com" -o anykernel.zip
@@ -42,7 +41,6 @@ jobs:
         export SUBARCH=arm64
         export PATH="$GITHUB_WORKSPACE/toolchain/bin:$PATH"
         export CROSS_COMPILE=aarch64-linux-gnu-
-        export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
         export CC=clang
         
         # Initialize the official stock Xiaomi Violet Android 10 user configuration layout
