@@ -18,16 +18,22 @@ jobs:
 
     - name: Clone Kernel Source
       run: |
-        # Switched to crDroid's official, highly active verified repository for violet
+        # Pulls the active crDroid violet kernel source structure directly
         git clone --depth=1 https://github.com kernel-source
 
-    - name: Clone Proton Clang Toolchain
+    - name: Download Toolchain and Packaging Tools
       run: |
-        git clone --depth=1 https://github.com toolchain
+        # Download Proton Clang Toolchain using a direct ZIP archive link to bypass Git blockades
+        curl -LO https://github.com
+        unzip master.zip
+        mv proton-clang-master toolchain
+        rm master.zip
 
-    - name: Clone AnyKernel3 Packaging Tool
-      run: |
-        git clone --depth=1 https://github.com anykernel
+        # Download AnyKernel3 framework directly
+        curl -LO https://github.com
+        unzip master.zip
+        mv AnyKernel3-master anykernel
+        rm master.zip
 
     - name: Compile Kernel
       run: |
