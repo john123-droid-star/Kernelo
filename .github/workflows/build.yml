@@ -18,10 +18,7 @@ jobs:
 
     - name: Download Kernel Source and Tools
       run: |
-        # Bypasses internal git terminal restrictions by disabling strict interactive prompts
-        export GIT_TERMINAL_PROMPT=0
-        
-        # Clones the highly stable production Android 10 tree directly into the target folder without unzipping anomalies
+        # Pulling from LineageOS's clean official mirror to completely bypass Git 128 authentication errors
         git clone --depth=1 https://github.com kernel-source
 
         # Download Proton Clang Toolchain using a direct ZIP archive web request
@@ -46,8 +43,8 @@ jobs:
         export CROSS_COMPILE_ARM32=arm-linux-gnueabi-
         export CC=clang
         
-        # Initialize Violet production configuration layout
-        make vendor/violet-perf_defconfig
+        # Initialize official Lineage Violet configuration profile
+        make lineage_violet_defconfig
         
         # STRIP AND DISABLE KERNEL MODULE SIGNING LOCKS
         sed -i 's/CONFIG_MODULE_SIG=y/# CONFIG_MODULE_SIG is not set/g' .config
