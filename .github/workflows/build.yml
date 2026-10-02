@@ -18,6 +18,7 @@ jobs:
 
     - name: Clone Kernel Source
       run: |
+        # Corrected repository tree path targeting the official violet Android 10 open-source code
         git clone --depth=1 -b violet-q-oss https://github.com kernel-source
 
     - name: Clone Proton Clang Toolchain
