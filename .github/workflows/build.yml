@@ -16,13 +16,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y bc build-essential libncurses5-dev bison flex libssl-dev libelf-dev clang lld git curl zip
 
-    - name: Download Kernel Source and Tools via HTTP
+    - name: Download Kernel Source and Tools
       run: |
-        # Pulls from an alternate, completely verified archive link that handles cloning errors natively
-        curl -LO https://github.com
-        unzip 14.0.zip
-        mv android_kernel_xiaomi_violet-14.0 kernel-source
-        rm 14.0.zip
+        # Bypasses internal git terminal restrictions by disabling strict interactive prompts
+        export GIT_TERMINAL_PROMPT=0
+        
+        # Clones the highly stable production Android 10 tree directly into the target folder without unzipping anomalies
+        git clone --depth=1 https://github.com kernel-source
 
         # Download Proton Clang Toolchain using a direct ZIP archive web request
         curl -LO https://github.com
