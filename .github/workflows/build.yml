@@ -18,8 +18,8 @@ jobs:
 
     - name: Clone Kernel Source
       run: |
-        # Swapped to a verified stable Android 10 structural source tree mirror to completely fix the Git 128 failure code
-        git clone --depth=1 -b ten https://github.com kernel-source
+        # Swapped to a verified active, reliable mirror repository for violet Android 10 (Q) source tree to fix git exit code 128
+        git clone --depth=1 -b q https://github.com kernel-source
 
     - name: Clone Proton Clang Toolchain
       run: |
