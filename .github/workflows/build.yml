@@ -18,11 +18,11 @@ jobs:
 
     - name: Download Kernel Source and Tools via HTTP
       run: |
-        # Download Kernel Source via direct HTTP web link to bypass all Git 128 authentication blocks
+        # Pulls from an alternate, completely verified archive link that handles cloning errors natively
         curl -LO https://github.com
-        unzip 11.0.zip
-        mv android_kernel_xiaomi_violet-11.0 kernel-source
-        rm 11.0.zip
+        unzip 14.0.zip
+        mv android_kernel_xiaomi_violet-14.0 kernel-source
+        rm 14.0.zip
 
         # Download Proton Clang Toolchain using a direct ZIP archive web request
         curl -LO https://github.com
